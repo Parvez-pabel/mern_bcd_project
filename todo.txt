@@ -1,0 +1,18 @@
+project setup
+file & folder setup 
+initial packages installation
+initial packages implementation in app.js file
+initial api.js file setup & connect with app.js
+index.js file setup
+application data model setup
+create/setup necessary controllers
+{
+    touch ProductController.js UserController.js InvoiceController.js WishListController.js CartListController.js FeaturesController.js 
+
+    touch ProductService.js UserService.js InvoiceService.js WishListService.js CartListService.js FeaturesService.js
+}
+create necessary functions and api's for the application
+{
+    Controllers file এ শুধু API calling function থাকবে, এখানে শুধু req, res Manage করবো।
+    আর service folder এ আলাদা service file তৈরী করে controllers file এর সাথে connect করাতে হবে। query লেখার বিষয় গুলো service file থেকে হবে।
+}
