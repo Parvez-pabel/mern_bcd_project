@@ -80,7 +80,7 @@ const ReadProfileService = async (req) => {
     let user_id = req.headers.user_id;
     let profile = await ProfileModel.findOne({ userID: user_id });
     if (profile) {
-      return { status: "success", data: profile };
+      return { status: "success", profile: profile };
     } else {
       return { status: "fail", message: "Profile not found" };
     }
