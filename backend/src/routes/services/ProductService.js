@@ -246,71 +246,7 @@ const ProductListBySimilarService = async (req) => {
     return { status: "fail", data: error.message };
   }
 };
-// const ProductDetailsService = async (req) => {
-//   try {
-//     let ProductID = new mongoose.Types.ObjectId(req.params.ProductID);
-//     let MatchStage = { $match: { _id: ProductID } };
-//     let JoinWithBrandStage = {
-//       $lookup: {
-//         from: "brands",
-//         localField: "brandID",
-//         foreignField: "_id",
-//         as: "brand",
-//       },
-//     };
-//     let JoinWithCategoryStage = {
-//       $lookup: {
-//         from: "categories",
-//         localField: "categoryID",
-//         foreignField: "_id",
-//         as: "category",
-//       },
-//     };
-//     let JoinWithDetailsStage = {
-//       $lookup: {
-//         from: "productdetails",
-//         localField: "_id",
-//         foreignField: "_id",
-//         as: "details",
-//       },
-//     };
-//     //to making array to object using mongodb aggregation $unwind
-//     let UnWindBrandStage = { $unwind: "$brand" };
-//     let UnWindCategoryStage = { $unwind: "$category" };
-//     let UnWindDetailsStage = { $unwind: "$details" };
-//     let projectionStage = {
-//       $project: {
-//         "brand._id": 0,
-//         "category._id": 0,
-//         brandID: 0,
-//         categoryID: 0,
-//         createdAt: 0,
-//         updatedAt: 0,
-//         "brand.createdAt": 0,
-//         "brand.updatedAt": 0,
-//         "category.createdAt": 0,
-//         "category.updatedAt": 0,
-//       },
-//     };
 
-//     let data = await ProductsModel.aggregate([
-//       UnWindBrandStage,
-//       JoinWithBrandStage,
-//       JoinWithCategoryStage,
-//       JoinWithDetailsStage,
-//       UnWindCategoryStage,
-//       UnWindDetailsStage,
-//       MatchStage,
-//       projectionStage,
-//     ]);
-//     if (!data) {
-//       return { status: "fail", message: "Product not found" };
-//     }
-//     return { status: "success", data: data };
-//   } catch (error) {
-//     return { status: "fail", data: error.message };
-//   }
-// };
 const ProductDetailsService = async (req) => {
   try {
     let ProductID;
@@ -503,6 +439,22 @@ const ProductReviewListService = async (req) => {
   }
 };
 
+const CreateReviewService = async (req) => {
+  try {
+    let user_id = req.headers.user_id;
+    let reqBody = req.body;
+    let Review = await ReviewModel.create({
+      userID: user_id,
+      ProductID: reqBody["ProductID"],
+      des: reqBody["des"],
+      rating: reqBody["rating"],
+    });
+    return { status: "success", data: Review };
+  } catch (error) {
+    return { status: "fail", data: error.message };
+  }
+};
+
 module.exports = {
   productBrandListService,
   ProductCategoryListService,
@@ -514,4 +466,5 @@ module.exports = {
   ProductListByRemarkService,
   ProductReviewListService,
   ProductDetailsService,
+  CreateReviewService,
 };

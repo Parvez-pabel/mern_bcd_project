@@ -181,6 +181,7 @@ const FormData = require("form-data");
 const createInvoiceService = async (req) => {
   try {
     let user_id = new mongoose.Types.ObjectId(req.headers.user_id);
+
     let cus_email = req.headers.email;
 
     // Calculate total payable & VAT
@@ -196,6 +197,7 @@ const createInvoiceService = async (req) => {
       },
       { $unwind: "$product" },
     ]);
+    console.log(cartProducts);
 
     let totalAmount = 0;
     cartProducts.forEach((item) => {
@@ -220,14 +222,14 @@ const createInvoiceService = async (req) => {
     let shipping_details = `Name: ${profile[0].ship_name}, Address: ${profile[0].ship_add}, City: ${profile[0].ship_city}, Country: ${profile[0].ship_country}, Phone: ${profile[0].ship_phone}`;
 
     // Generate transaction details
-    let trx_id = `MERN${Math.floor(10000000 + Math.random() * 900000000)}`;
+    let tran_id = `MERN${Math.floor(10000000 + Math.random() * 900000000)}`;
 
     // Create invoice
     let invoice = await InvoiceModel.create({
       userID: user_id,
       cus_details: customer_details,
       Ship_details: shipping_details,
-      tran_id: trx_id,
+      tran_id: tran_id,
       val_id: 0,
       delivery_status: "Pending",
       payment_status: "Pending",
@@ -264,11 +266,11 @@ const createInvoiceService = async (req) => {
     form.append("store_passwd", PaymentSettings[0].store_passwd);
     form.append("total_amount", payAble.toString());
     form.append("currency", "BDT");
-    form.append("tran_id", trx_id);
-    form.append("success_url", `${PaymentSettings[0].success_url}/${trx_id}`);
-    form.append("fail_url", `${PaymentSettings[0].fail_url}/${trx_id}`);
-    form.append("cancel_url", `${PaymentSettings[0].cancel_url}/${trx_id}`);
-    form.append("ipn_url", `${PaymentSettings[0].ipn_url}/${trx_id}`);
+    form.append("tran_id", tran_id);
+    form.append("success_url", `${PaymentSettings[0].success_url}/${tran_id}`);
+    form.append("fail_url", `${PaymentSettings[0].fail_url}/${tran_id}`);
+    form.append("cancel_url", `${PaymentSettings[0].cancel_url}/${tran_id}`);
+    form.append("ipn_url", `${PaymentSettings[0].ipn_url}/${tran_id}`);
 
     // Customer info
     form.append("cus_name", profile[0].cus_name);
@@ -312,14 +314,13 @@ const createInvoiceService = async (req) => {
 };
 const paymentSuccessService = async (req) => {
   try {
-    let trxID = req.params.trx_id
-    let invoice = await InvoiceModel.findOneAndUpdate(
+    let trxID = req.params.trx_id;
+    await InvoiceModel.updateOne(
       { tran_id: trxID },
-      { payment_status: "Completed" },
-      { new: true }
+      { payment_status: "Success" }
     );
-    if (!invoice) throw new Error("Invoice not found.");
-    return { status: "success", data: invoice };
+
+    return { status: "success" };
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
@@ -327,18 +328,38 @@ const paymentSuccessService = async (req) => {
 
 const paymentFailService = async (req) => {
   try {
+    let trxID = req.params.trx_id;
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: "fail" }
+    );
+
+    return { status: "fail" };
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
 };
 const paymentCancelService = async (req) => {
   try {
+    let trxID = req.params.trx_id;
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: "cancel" }
+    );
+
+    return { status: "cancel" };
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
 };
 const paymentIPNService = async (req) => {
   try {
+    let trxID = req.params.trx_id;
+    let status = req.body["status"];
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: status }
+    );
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
@@ -346,12 +367,32 @@ const paymentIPNService = async (req) => {
 
 const InvoiceListService = async (req) => {
   try {
+    let user_id = new mongoose.Types.ObjectId(req.headers.user_id);
+    let invoice = await InvoiceModel.find({ userID: user_id });
+    return { status: "success", data: invoice };
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }
 };
 const InvoiceProductListService = async (req) => {
   try {
+    let user_id = new mongoose.Types.ObjectId(req.headers.user_id);
+
+    let invoice_id = new mongoose.Types.ObjectId(req.params.invoice_id);
+
+    let Products = await InvoiceProductModel.aggregate([
+      { $match: { userID: user_id, invoiceID: invoice_id } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "productID",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+    ]);
+    return { status: "success", data: Products };
   } catch (error) {
     return { status: "fail", message: "Something went wrong" };
   }

@@ -9,6 +9,7 @@ const {
   ProductListByRemarkService,
   ProductReviewListService,
   ProductDetailsService,
+  CreateReviewService,
 } = require("../routes/services/ProductService");
 
 exports.ProductBrandList = async (req, res) => {
@@ -32,24 +33,29 @@ exports.ProductListByCategory = async (req, res) => {
   return res.status(200).json(result);
 };
 exports.ProductListByRemark = async (req, res) => {
-    let result = await ProductListByRemarkService(req);
-    return res.status(200).json(result);
+  let result = await ProductListByRemarkService(req);
+  return res.status(200).json(result);
 };
 exports.ProductListBySimilar = async (req, res) => {
-      let result = await ProductListBySimilarService(req);
-      return res.status(200).json(result);
+  let result = await ProductListBySimilarService(req);
+  return res.status(200).json(result);
 };
 exports.ProductListByKeyword = async (req, res) => {
-          let result = await ProductListByKeywordService(req);
-          return res.status(200).json(result);
+  let result = await ProductListByKeywordService(req);
+  return res.status(200).json(result);
 };
 
 exports.ProductReviewList = async (req, res) => {
-   let result = await ProductReviewListService(req);
-   return res.status(200).json(result);
+  let result = await ProductReviewListService(req);
+  return res.status(200).json(result);
 };
-// exports.CreateProductReview = async (req, res) => {};
+
 exports.ProductDetails = async (req, res) => {
-        let result = await ProductDetailsService(req);
-        return res.status(200).json(result);
+  let result = await ProductDetailsService(req);
+  return res.status(200).json(result);
+};
+
+exports.CreateProductReview = async (req, res) => {
+  let result = await CreateReviewService(req);
+  return res.status(200).json(result);
 };

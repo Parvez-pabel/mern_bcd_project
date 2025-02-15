@@ -10,6 +10,7 @@ const {
   ProductListByCategory,
   ProductListBySimilar,
   ProductListByKeyword,
+  CreateProductReview,
 } = require("../controllers/ProductController");
 const {
   UserOTP,
@@ -39,6 +40,7 @@ const {
   PaymentFail,
   PaymentIPN,
 } = require("../controllers/InvoiceController");
+const { FeatureList } = require("../controllers/FeaturesController");
 
 const router = express.Router();
 
@@ -80,10 +82,21 @@ router.post("/UpdateCartList/:cartID", AuthVerification, UpdateCartList);
 
 router.get("/CreateInvoice", AuthVerification, CreateInvoice);
 router.get("/invoiceList", AuthVerification, InvoiceList);
-router.get("/invoiceProductList/:inv_id", AuthVerification, InvoiceProductList);
-router.get("/paymentSuccess/:trx_id", AuthVerification, PaymentSuccess);
-router.get("/paymentCancel/:trx_id", AuthVerification, PaymentCancel);
-router.get("/paymentFails/:trx_id", AuthVerification, PaymentFail);
-router.get("/paymentIPN/:trx_id", AuthVerification, PaymentIPN);
+router.get(
+  "/invoiceProductList/:invoice_id",
+  AuthVerification,
+  InvoiceProductList
+);
+
+// payment routes
+router.post("/PaymentSuccess/:trx_id", PaymentSuccess);
+router.post("/PaymentCancel/:trx_id", PaymentCancel);
+router.post("/PaymentFail/:trx_id", PaymentFail);
+router.post("/PaymentIPN/:trx_id", PaymentIPN);
+
+// features
+router.get("/FeaturesList", FeatureList);
+//review
+router.post("/CreateReview", AuthVerification, CreateProductReview);
 
 module.exports = router;
