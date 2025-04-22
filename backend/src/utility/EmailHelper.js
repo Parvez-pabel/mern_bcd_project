@@ -1,48 +1,24 @@
-// const nodemailer = require("nodemailer");
-
-// //sent email function
-// const EmailSend = async (EmailTo, EmailText, EmailSubject) => {
-
-//         let transporter = nodemailer.createTransport({
-//             host: "mail.teamrabbil.com",
-//             port: 465,
-//             secure: false,
-//             auth: {
-//                 user: "info@teamrabbil.com",
-//                 pass: "~sR4[bhaC[Qs",
-//                 tls: { rejectUnauthorized: false },
-//             },
-
-//         });
-//         let mailOption = {
-//             from: "MERN E-commerce Solution <info@teamrabbil.com>",
-//             to: EmailTo,
-//             subject: EmailSubject,
-//             text: EmailText,
-//     };
-//     return await transporter.sendMail(mailOption)
-// }
-// module.exports = EmailSend;
-
 const nodemailer = require("nodemailer");
 
 // Send email function
 const EmailSend = async (EmailTo, EmailSubject, EmailText) => {
   try {
     let transporter = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
+      service: "gmail",
+      host: "smtp.gmail.com",
+      secure: false,
+      port: 587, // port for secure SMTP
       auth: {
-        user: "6e499bbddc88a2",
-        pass: "06eb58873d6803",
+        user: "info.parvezservice@gmail.com",
+        pass: "pyfr hyao yejh zgzt",
       },
       tls: {
-        rejectUnauthorized: false, // Ignore SSL certificate issues
+        rejectUnauthorized: false,
       },
     });
 
     let mailOption = {
-      from: "MERN E-commerce Solution <parvez.10ms@gmail.com>",
+      from: "Zawyah-your shopping corner <info.parvezservice@gmail.com>",
       to: EmailTo,
       subject: EmailSubject,
       text: EmailText,
