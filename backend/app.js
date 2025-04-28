@@ -57,11 +57,11 @@ app.use("*", (req, res) => {
 
 // Serve static files from the React app
 
-app.use(express.static(path.join("client/build")));
+app.use(express.static("client/dist"));
 
 // Handle React routing, return all requests to React app
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
 });
 
 module.exports = app;
