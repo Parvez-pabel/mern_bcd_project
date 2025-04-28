@@ -47,8 +47,7 @@ const Products = () => {
                     className="nav-link"
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
-                    data-
-                    bs-target="#pills-trending"
+                    data-bs-target="#pills-trending"
                     type="button"
                     role="tab"
                     aria-controls="pills-profile"
@@ -65,8 +64,7 @@ const Products = () => {
                     className="nav-link"
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
-                    data-
-                    bs-target="#pills-popular"
+                    data-bs-target="#pills-popular"
                     type="button"
                     role="tab"
                     aria-controls="pills-contact"
@@ -83,8 +81,7 @@ const Products = () => {
                     className="nav-link"
                     id="pills-disabled-tab"
                     data-bs-toggle="pill"
-                    data-
-                    bs-target="#pills-top"
+                    data-bs-target="#pills-top"
                     type="button"
                     role="tab"
                     aria-controls="pills-disabled"
@@ -118,7 +115,7 @@ const Products = () => {
                     className="nav-link"
                     id="pills-disabled-tab"
                     data-bs-toggle="pill"
-                    data-bs-target="#pills-special"
+                    data-bs-target="#pills-flash"
                     type="button"
                     role="tab"
                     aria-controls="pills-disabled"
@@ -310,6 +307,124 @@ const Products = () => {
                 <div
                   className="tab-pane fade"
                   id="pills-special"
+                  role="tabpanel"
+                  aria-labelledby="pills-disabled-tab"
+                  tabIndex="0"
+                >
+                  {ProductListByRemark === null ? (
+                    <ProductsSkeleton />
+                  ) : (
+                    <div className="container">
+                      <div className="row">
+                        {ProductListByRemark.map((item, index) => {
+                          let price = (
+                            <p className="bodyMedium text-dark my-1">
+                              Price{item.price}
+                            </p>
+                          );
+                          if (item.discount === true) {
+                            price = (
+                              <p className="bodyMedium text-dark my-1">
+                                Price:<strike> ${item.price} </strike>{" "}
+                                <b>${item.discountPrice}</b>
+                              </p>
+                            );
+                          }
+                          return (
+                            <div
+                              key={index}
+                              className="col-md-3 p-2 col-lg-3 col-sm-6 col-12"
+                            >
+                              <Link
+                                to={`/details/${item._id}`}
+                                className="card shadow-sm h-100 rounded-3 bg-white"
+                              >
+                                <img
+                                  className="w-100 rounded-top-2"
+                                  src={item.image}
+                                />
+                                <div className="card-body">
+                                  <p className="bodySmal text-secondary my-1">
+                                    {item.title}
+                                  </p>
+                                  {price}
+                                  <StarRatings
+                                    rating={parseFloat(item.star)}
+                                    starRatedColor="red"
+                                    starDimension="15px"
+                                    starSpacing="2px"
+                                  />
+                                </div>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="pills-top"
+                  role="tabpanel"
+                  aria-labelledby="pills-disabled-tab"
+                  tabIndex="0"
+                >
+                  {ProductListByRemark === null ? (
+                    <ProductsSkeleton />
+                  ) : (
+                    <div className="container">
+                      <div className="row">
+                        {ProductListByRemark.map((item, index) => {
+                          let price = (
+                            <p className="bodyMedium text-dark my-1">
+                              Price{item.price}
+                            </p>
+                          );
+                          if (item.discount === true) {
+                            price = (
+                              <p className="bodyMedium text-dark my-1">
+                                Price:<strike> ${item.price} </strike>{" "}
+                                <b>${item.discountPrice}</b>
+                              </p>
+                            );
+                          }
+                          return (
+                            <div
+                              key={index}
+                              className="col-md-3 p-2 col-lg-3 col-sm-6 col-12"
+                            >
+                              <Link
+                                to={`/details/${item._id}`}
+                                className="card shadow-sm h-100 rounded-3 bg-white"
+                              >
+                                <img
+                                  className="w-100 rounded-top-2"
+                                  src={item.image}
+                                />
+                                <div className="card-body">
+                                  <p className="bodySmal text-secondary my-1">
+                                    {item.title}
+                                  </p>
+                                  {price}
+                                  <StarRatings
+                                    rating={parseFloat(item.star)}
+                                    starRatedColor="red"
+                                    starDimension="15px"
+                                    starSpacing="2px"
+                                  />
+                                </div>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div
+                  className="tab-pane fade"
+                  id="pills-flash"
                   role="tabpanel"
                   aria-labelledby="pills-disabled-tab"
                   tabIndex="0"

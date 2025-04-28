@@ -25,9 +25,39 @@ const ProductStore = create((set) => ({
   },
   ProductListByRemark: null,
   ProductListByRemarkRequest: async (remark) => {
+    set({ ProductListByRemark: null });
     let res = await axios.get(`/api/ProductListByRemark/${remark}`);
     if (res.data["status"] === "success") {
       set({ ProductListByRemark: res.data["data"] });
+    }
+  },
+  ProductList: null,
+  ProductListByBrandRequest: async (BrandID) => {
+    set({ ProductList: null });
+    let res = await axios.get(`/api/ProductListByBrand/${BrandID}`);
+    if (res.data["status"] === "success") {
+      set({ ProductList: res.data["data"] });
+    }
+  },
+  ProductListByCategoryRequest: async (CategoryID) => {
+    set({ ProductList: null });
+    let res = await axios.get(`/api/ProductListByCategory/${CategoryID}`);
+    if (res.data["status"] === "success") {
+      set({ ProductList: res.data["data"] });
+    }
+  },
+  ProductListByKeyWordRequest: async (Keyword) => {
+    set({ ProductList: null });
+    let res = await axios.get(`/api/ProductListByKeyword/${Keyword}`);
+    if (res.data["status"] === "success") {
+      set({ ProductList: res.data["data"] });
+    }
+  },
+  ProductListBySimilarRequest: async (CategoryID) => {
+    set({ ProductList: null });
+    let res = await axios.get(`/api/ProductListBySimilar/${CategoryID}`);
+    if (res.data["status"] === "success") {
+      set({ ProductList: res.data["data"] });
     }
   },
 }));
