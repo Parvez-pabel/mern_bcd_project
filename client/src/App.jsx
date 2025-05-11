@@ -11,6 +11,7 @@ import RefundPage from "./pages/RefundPage";
 import HowToBuy from "./pages/HowToBuy";
 import ContactPage from "./pages/ContactPage";
 import ComplainPage from "./pages/ComplainPage";
+import TermsPage from "./pages/TermsPage";
 
 const App = () => {
   return (
