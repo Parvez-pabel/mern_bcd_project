@@ -1,8 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/zawyahlogo.png";
+import ProductStore from "../../store/ProductStore";
 
 const AppNavbar = () => {
+  // const { setSearchKeyWord, SearchKeyWord } = ProductStore();
+  const navigate = useNavigate();
+  const SearchKeyWord = ProductStore((state) => state.SearchKeyWord);
+  const setSearchKeyWord = ProductStore((state) => state.setSearchKeyWord);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const Keyword = SearchKeyWord.trim();
+    if (Keyword.length > 0) {
+      navigate(`/by-keyword/${Keyword}`);
+    } else {
+      navigate("/");
+    }
+  };
   return (
     <>
       <div className="container-fluid text-white p-2 bg-success ">
@@ -58,14 +72,25 @@ const AppNavbar = () => {
           </div>
           <div className="d-lg-flex">
             <div className="input-group">
-              <input
-                className="form-control"
-                type="search"
-                placeholder="Search"
-              />
-              <button className="btn btn-secondary-dark" type="submit">
-                🔍
-              </button>
+              <form onSubmit={handleSubmit} className="d-flex gap-2">
+                <input
+                  onChange={(e) => setSearchKeyWord(e.target.value)}
+                  className="form-control btn-outline-success "
+                  type="search"
+                  placeholder="Search"
+                />
+                <button
+                  to={
+                    SearchKeyWord?.length > 0
+                      ? `/by-keyword/${SearchKeyWord}`
+                      : `/`
+                  }
+                  className="btn btn-outline-success"
+                  type="submit"
+                >
+                  🔍
+                </button>
+              </form>
             </div>
             <Link to="/cart" className="btn ms-2 btn-light position-relative">
               <i className="bi text-dark bi-bag"></i>

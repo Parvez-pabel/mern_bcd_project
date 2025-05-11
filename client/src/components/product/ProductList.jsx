@@ -1,34 +1,115 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductStore from "../../store/ProductStore";
 import { Link } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 import ProductsSkeleton from "../../skeleton/ProductsSkeleton";
 
 const ProductList = () => {
-  const { ProductList } = ProductStore();
+  const {
+    ProductList,
+    BrandList,
+    BrandListRequest,
+    CategoryList,
+    CategoryListRequest,
+    ProductListByFilterRequest,
+  } = ProductStore();
+
+  let [Filter, SetFilter] = useState({
+    brandID: "",
+    categoryID: "",
+    priceMax: "",
+    priceMin: "",
+  });
+
+  const inputOnChange = async (name, value) => {
+    SetFilter((data) => ({
+      ...data,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    (async () => {
+      BrandList === null ? await BrandListRequest() : null;
+      CategoryList === null ? await CategoryListRequest() : null;
+      let isEveryFilterPropertyEmpty = Object.values(Filter).every(
+        (value) => value === ""
+      );
+      !isEveryFilterPropertyEmpty
+        ? await ProductListByFilterRequest(Filter)
+        : null;
+    })();
+  }, [Filter]);
+
   return (
     <div className="container mt-2  ">
       <div className="row">
         <div className="col-md-3 p-2">
           <div className="card vh-50 p-3 shadow-sm">
             <label className="from-label mt-3">Brands</label>
-            <select className="form-control form-select">
+            <select
+              value={Filter.brandID}
+              onChange={async (e) => {
+                await inputOnChange("brandID", e.target.value);
+              }}
+              className="form-control form-select"
+            >
               <option value="">Choose Brands</option>
+              {BrandList !== null ? (
+                BrandList.map((item, index) => {
+                  return (
+                    <option key={index} value={item["_id"]}>
+                      {item.brandName}{" "}
+                    </option>
+                  );
+                })
+              ) : (
+                <option></option>
+              )}
             </select>
             <label className="from-label mt-3">Category</label>
-            <select className="form-control form-select">
+            <select
+              value={Filter.categoryID}
+              onChange={async (e) => {
+                await inputOnChange("categoryID", e.target.value);
+              }}
+              className="form-control form-select"
+            >
               <option value="">Choose Category</option>
+              {CategoryList !== null ? (
+                CategoryList.map((item, index) => {
+                  return (
+                    <option key={index} value={item["_id"]}>
+                      {item.categoryName}{" "}
+                    </option>
+                  );
+                })
+              ) : (
+                <option></option>
+              )}
             </select>
-            <label className="from-label mt-3">Maximum Price ${}</label>
+            <label className="from-label mt-3">
+              Maximum Price ${Filter.priceMax}
+            </label>
             <input
+              value={Filter.priceMax}
+              onChange={async (e) => {
+                await inputOnChange("priceMax", e.target.value);
+              }}
               min={0}
               max={1000000}
               step={1000}
               type="range"
               className="form-range"
             />
-            <label className="from-label mt-3">Minimum Price ${}</label>
+            <label className="from-label mt-3">
+              Minimum Price ${Filter.priceMin}
+            </label>
             <input
+              value={Filter.priceMin}
+              onChange={async (e) => {
+                await inputOnChange("priceMin", e.target.value);
+              }}
               min={0}
               max={1000000}
               step={1000}
@@ -46,16 +127,16 @@ const ProductList = () => {
                 <div className="container">
                   <div className="row">
                     {ProductList.map((item, index) => {
-                      let price = (
+                      let Price = (
                         <p className="bodyMedium text-dark my-1">
-                          Price{item.price}
+                          Price {item.price}
                         </p>
                       );
                       if (item.discount === true) {
-                        price = (
-                          <p className="bodyMedium text-dark my-1">
-                            Price:<strike> ${item.price} </strike>{" "}
-                            <b>${item.discountPrice}</b>
+                        Price = (
+                          <p>
+                            Price:<strike> ${item.price}</strike>
+                            <b> ${item.discountPrice}</b>
                           </p>
                         );
                       }
@@ -76,9 +157,9 @@ const ProductList = () => {
                               <p className="bodySmal text-secondary my-1">
                                 {item.title}
                               </p>
-                              {price}
+                              {Price}
                               <StarRatings
-                                rating={parseFloat(item.star)}
+                                rating={Number(item?.star || 0)}
                                 starRatedColor="red"
                                 starDimension="15px"
                                 starSpacing="2px"

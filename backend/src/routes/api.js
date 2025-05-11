@@ -11,6 +11,7 @@ const {
   ProductListBySimilar,
   ProductListByKeyword,
   CreateProductReview,
+  ProductListByFilter,
 } = require("../controllers/ProductController");
 const {
   UserOTP,
@@ -40,7 +41,10 @@ const {
   PaymentFail,
   PaymentIPN,
 } = require("../controllers/InvoiceController");
-const { FeatureList } = require("../controllers/FeaturesController");
+const {
+  FeatureList,
+  LegalsDetails,
+} = require("../controllers/FeaturesController");
 
 const router = express.Router();
 
@@ -54,8 +58,9 @@ router.get("/ProductListBySimilar/:CategoryID", ProductListBySimilar);
 router.get("/ProductListByKeyword/:Keyword", ProductListByKeyword);
 router.get("/ProductListByRemark/:Remark", ProductListByRemark);
 router.get("/ProductReviewList/:ProductID", ProductReviewList);
-// router.get("/CreateProductReview", CreateProductReview);
+
 router.get("/ProductDetails/:ProductID", ProductDetails);
+router.post("/ProductListByFilter", ProductListByFilter);
 
 //define user related routes
 
@@ -98,5 +103,8 @@ router.post("/PaymentIPN/:trx_id", PaymentIPN);
 router.get("/FeaturesList", FeatureList);
 //review
 router.post("/CreateReview", AuthVerification, CreateProductReview);
+
+//legals
+router.get("/LegalDetails/:type", LegalsDetails);
 
 module.exports = router;

@@ -11,7 +11,7 @@ const ProductByCategory = () => {
     (async () => {
       await ProductListByCategoryRequest(id);
     })();
-  }, []);
+  }, [id]);
   return (
     <Layout>
       <ProductList />

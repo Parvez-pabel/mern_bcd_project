@@ -20,9 +20,11 @@ const Brands = () => {
               </span>
               {BrandList.map((item, index) => {
                 return (
-                  <div className="col-6 col-lg-8r text-center col-md-8r p-2">
+                  <div
+                    key={index}
+                    className="col-6 col-lg-8r text-center col-md-8r p-2"
+                  >
                     <Link
-                      key={index}
                       to={`/by-brand/${item["_id"]}`}
                       className="card h-100 rounded-3 bg-light"
                     >
