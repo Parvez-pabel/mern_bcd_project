@@ -12,6 +12,9 @@ import HowToBuy from "./pages/HowToBuy";
 import ContactPage from "./pages/ContactPage";
 import ComplainPage from "./pages/ComplainPage";
 import TermsPage from "./pages/TermsPage";
+import Login from "./components/user/Login";
+import LoginPage from "./pages/LoginPage";
+import OtpPage from "./pages/OtpPage";
 
 const App = () => {
   return (
@@ -30,6 +33,9 @@ const App = () => {
         <Route path="/howtobuy" element={<HowToBuy />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/complain" element={<ComplainPage />} />
+        //Login
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/otp" element={<OtpPage />} />
       </Routes>
     </BrowserRouter>
   );

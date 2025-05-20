@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/zawyahlogo.png";
 import ProductStore from "../../store/ProductStore";
+import UserStore from "../../store/UserStore";
+import SubmitButton from "../user/SubmitButton";
+import toast from "react-hot-toast";
 
 const AppNavbar = () => {
-  // const { setSearchKeyWord, SearchKeyWord } = ProductStore();
+  let { isLogin, LogoutRequest } = UserStore();
   const navigate = useNavigate();
   const SearchKeyWord = ProductStore((state) => state.SearchKeyWord);
   const setSearchKeyWord = ProductStore((state) => state.setSearchKeyWord);
@@ -16,6 +19,13 @@ const AppNavbar = () => {
     } else {
       navigate("/");
     }
+  };
+
+  const onLogout = async () => {
+    await LogoutRequest();
+    sessionStorage.clear();
+    localStorage.clear();
+    toast.success("Logout Successful!"), navigate("/");
   };
   return (
     <>
@@ -32,7 +42,7 @@ const AppNavbar = () => {
                 </span>
               </span>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 d-flex justify-content-end ">
               <span className="float-end">
                 <span className="bodySmal mx-2">
                   <i className="bi bi-whatsapp"></i>
@@ -70,7 +80,7 @@ const AppNavbar = () => {
               </li>
             </ul>
           </div>
-          <div className="d-lg-flex">
+          <div className="d-lg-flex ">
             <div className="input-group">
               <form onSubmit={handleSubmit} className="d-flex gap-2">
                 <input
@@ -92,18 +102,31 @@ const AppNavbar = () => {
                 </button>
               </form>
             </div>
-            <Link to="/cart" className="btn ms-2 btn-light position-relative">
-              <i className="bi text-dark bi-bag"></i>
-            </Link>
-            <Link to="/wish" className="btn ms-2 btn-light d-flex">
-              <i className="bi text-dark bi-heart"></i>
-            </Link>
-            <Link to="/profile" className="btn ms-3 btn-success d-flex">
-              Profile
-            </Link>
-            <Link to="/logout" className="btn ms-3 btn-success d-flex">
-              Logout
-            </Link>
+            <div className="d-flex justify-content-end ">
+              <Link to="/cart" className="btn ms-2 btn-light position-relative">
+                <i className="bi text-dark bi-bag"></i>
+              </Link>
+              <Link to="/wish" className="btn ms-2 btn-light d-flex">
+                <i className="bi text-dark bi-heart"></i>
+              </Link>
+
+              {isLogin() ? (
+                <>
+                  <Link to="/profile" className="btn ms-3 btn-success d-flex ">
+                    <i className="bi bi-person-circle"></i>
+                  </Link>
+                  <SubmitButton
+                    onClick={onLogout}
+                    className="btn ms-3 btn-success d-flex"
+                    text="Logout"
+                  ></SubmitButton>
+                </>
+              ) : (
+                <Link to="/login" className="btn ms-3 btn-success d-flex">
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </nav>
