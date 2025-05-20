@@ -15,6 +15,7 @@ import TermsPage from "./pages/TermsPage";
 import Login from "./components/user/Login";
 import LoginPage from "./pages/LoginPage";
 import OtpPage from "./pages/OtpPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
         //Login
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp" element={<OtpPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
