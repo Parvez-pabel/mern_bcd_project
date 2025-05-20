@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getEmail, setEmail } from "../utility/utility";
+import { getEmail, setEmail, unauthorized } from "../utility/utility";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -45,6 +45,68 @@ const UserStore = create((set) => ({
     let res = await axios.get(`/api/UserLogout`);
     set({ isFormSubmit: false });
     return res.data["status"] === "success";
+  },
+
+
+  //profile form manage
+  ProfileForm: {
+    cus_add: "",
+    cus_city: "",
+    cus_country: "",
+    cus_fax: "",
+    cus_name: "",
+    cus_phone: "",
+    cus_postCode: "",
+    cus_state: "",
+    ship_add: "",
+    ship_city: " ",
+    ship_country: "",
+    ship_name: " ",
+    ship_phone: "",
+    ship_postCode: "",
+    ship_state: "",
+  },
+  ProfileFormChange: (name, value) => {
+    set((state) => {
+      ProfileForm: ({
+        ...state.ProfileForm,
+        [name]: value,
+      });
+    });
+  },
+  //profile details fetching
+  ProfileDetails: null,
+  ProfileDetailsRequest: async () => {
+    try {
+      let res = await axios.get(`/api/ReadProfile`);
+      if (res.data["data"].length > 0) {
+        set({
+          ProfileDetails: res.data["data"][0],
+        });
+        set({
+          ProfileForm: res.data["data"][0],
+        });
+      } else {
+        set({
+          ProfileDetails: [],
+        });
+      }
+    } catch (error) {
+      unauthorized(error.response.status);
+    }
+  },
+  //profile updating
+  ProfileSaveRequest: async (PostBody) => {
+    try {
+      set({
+        ProfileDetails: null,
+      });
+      let res = await axios.post(`/api/UpdateProfile`, PostBody);
+      return res.data["status"] === "success";
+    } catch (error) {
+      unauthorized(error.response.status);
+      // unauthorized is a function made in utility for authorizing the user is login or not
+    }
   },
 }));
 
