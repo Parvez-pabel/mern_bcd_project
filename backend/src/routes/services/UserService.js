@@ -74,22 +74,30 @@ const CreateProfileService = async (req) => {
     return { status: "fail", message: error.message };
   }
 };
+// const ReadProfileService = async (req) => {
+//   //read profile
+//   try {
+//     let user_id = req.headers.user_id;
+//     let profile = await ProfileModel.findOne({ userID: user_id });
+//     if (profile) {
+//       return { status: "success", profile: profile };
+//     } else {
+//       return { status: "fail", message: "Profile not found" };
+//     }
+//   } catch (error) {
+//     console.error("Error in ReadProfileService:", error);
+//     return { status: "fail", message: error.message };
+//   }
+// };
 const ReadProfileService = async (req) => {
-  //read profile
   try {
     let user_id = req.headers.user_id;
-    let profile = await ProfileModel.findOne({ userID: user_id });
-    if (profile) {
-      return { status: "success", profile: profile };
-    } else {
-      return { status: "fail", message: "Profile not found" };
-    }
-  } catch (error) {
-    console.error("Error in ReadProfileService:", error);
-    return { status: "fail", message: error.message };
+    let result = await ProfileModel.find({ userID: user_id });
+    return { status: "success", data: result };
+  } catch (e) {
+    return { status: "fail", message: "Something Went Wrong" };
   }
 };
-
 module.exports = {
   UserOTPService,
   VerifyOTPService,

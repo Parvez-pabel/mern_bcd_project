@@ -7,7 +7,8 @@ import SubmitButton from "../user/SubmitButton";
 import toast from "react-hot-toast";
 
 const AppNavbar = () => {
-  let { isLogin, LogoutRequest } = UserStore();
+  const isLogin = UserStore((state) => state.isLogin);
+  const LogoutRequest = UserStore((state) => state.LogoutRequest);
   const navigate = useNavigate();
   const SearchKeyWord = ProductStore((state) => state.SearchKeyWord);
   const setSearchKeyWord = ProductStore((state) => state.setSearchKeyWord);
