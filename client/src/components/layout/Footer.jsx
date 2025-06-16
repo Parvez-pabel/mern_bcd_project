@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <div className="section-bottom shadow-sm bg-white ">
+      <div className="section-bottom shadow-sm bg-white fixed-bottom ">
         <div className="container py-5">
           <div className="row">
             <div className="col-md-4">
@@ -58,7 +58,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-dark p-1 text-center ">
+      <div className="bg-dark p-1 text-center  fixed-bottom">
         <p className="text-white bodySmal">All Rights Reserved</p>
       </div>
     </>
