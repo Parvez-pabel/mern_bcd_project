@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/zawyahlogo.png";
 import ProductStore from "../../store/ProductStore";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "../user/SubmitButton";
 import toast from "react-hot-toast";
+import CartStore from "../../store/CartStore";
 
 const AppNavbar = () => {
   const isLogin = UserStore((state) => state.isLogin);
@@ -12,6 +13,8 @@ const AppNavbar = () => {
   const navigate = useNavigate();
   const SearchKeyWord = ProductStore((state) => state.SearchKeyWord);
   const setSearchKeyWord = ProductStore((state) => state.setSearchKeyWord);
+  const { CartCount, CartListRequest } = CartStore();
+  // const { WishCount, WishListRequest } = WishStore();
   const handleSubmit = (e) => {
     e.preventDefault();
     const Keyword = SearchKeyWord.trim();
@@ -21,7 +24,14 @@ const AppNavbar = () => {
       navigate("/");
     }
   };
-
+  useEffect(() => {
+    (async () => {
+      if (isLogin()) {
+        await CartListRequest();
+        // await WishListRequest();
+      }
+    })();
+  }, []);
   const onLogout = async () => {
     await LogoutRequest();
     sessionStorage.clear();
@@ -103,10 +113,14 @@ const AppNavbar = () => {
                 </button>
               </form>
             </div>
-            <div className="d-flex justify-content-end ">
+            <div className="d-flex ">
               <Link to="/cart" className="btn ms-2 btn-light position-relative">
-                <i className="bi text-dark bi-bag"></i>
+                <i className="bi text-dark  bi-bag"></i>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                  {CartCount}
+                </span>
               </Link>
+
               <Link to="/wish" className="btn ms-2 btn-light d-flex">
                 <i className="bi text-dark bi-heart"></i>
               </Link>

@@ -2,7 +2,6 @@ const {
   UserOTPService,
   VerifyOTPService,
   CreateProfileService,
-
   ReadProfileService,
 } = require("../routes/services/UserService");
 
@@ -24,6 +23,7 @@ exports.VerifyOTP = async (req, res) => {
   }
   return res.status(200).json(result);
 };
+
 exports.UserLogout = async (req, res) => {
   let cookieOption = {
     expires: new Date(Date.now() - 24 * 6060 * 1000),

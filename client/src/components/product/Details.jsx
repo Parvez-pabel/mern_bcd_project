@@ -4,16 +4,32 @@ import ProductStore from "../../store/ProductStore";
 import DetailsSkeleton from "../../skeleton/DetailsSkeleton";
 import parse from "html-react-parser";
 import Reviews from "./Reviews";
+import CartButton from "./../cart/CartButton";
+import toast from "react-hot-toast";
+import CartStore from "../../store/CartStore";
 
 const Details = () => {
   const { ProductDetails } = ProductStore();
   const [Quantity, SetQuantity] = useState(1);
+  const { CartFormChange, CartForm, CartSaveRequest, CartListRequest } =
+    CartStore();
   const IncrementQuantity = () => {
     SetQuantity((Quantity) => Quantity + 1);
   };
   const DecrementQuantity = () => {
     if (Quantity > 1) {
       SetQuantity((Quantity) => Quantity - 1);
+    }
+  };
+  const AddCart = async (productID) => {
+    if (CartForm.color === "" || CartForm.size === "") {
+      toast.error("Please select both color and size");
+      return;
+    }
+    let res = await CartSaveRequest(CartForm, productID, Quantity);
+    if (res) {
+      toast.success("Cart Item Added");
+      await CartListRequest();
     }
   };
   if (ProductDetails === null) {
@@ -50,7 +66,13 @@ const Details = () => {
               <div className="row">
                 <div className="col-4 p-2">
                   <label className="bodySmal">Size</label>
-                  <select className="form-control my-2 form-select">
+                  <select
+                    value={CartForm.size}
+                    onChange={(e) => {
+                      CartFormChange("size", e.target.value);
+                    }}
+                    className="form-control my-2 form-select"
+                  >
                     <option value="">Size</option>
                     {ProductDetails[0].details.size
                       .split(",")
@@ -61,7 +83,13 @@ const Details = () => {
                 </div>
                 <div className="col-4 p-2">
                   <label className="bodySmal">Color</label>
-                  <select className="form-control my-2 form-select">
+                  <select
+                    value={CartForm.color}
+                    onChange={(e) => {
+                      CartFormChange("color", e.target.value);
+                    }}
+                    className="form-control my-2 form-select"
+                  >
                     <option value="">Color</option>
                     {ProductDetails[0].details.color
                       .split(",")
@@ -94,7 +122,13 @@ const Details = () => {
                   </div>
                 </div>
                 <div className="col-4 p-2">
-                  <button className="btn w-100 btn-success">Add to Cart</button>
+                  <CartButton
+                    onClick={async () => {
+                      await AddCart(ProductDetails[0]["_id"]);
+                    }}
+                    className="btn w-100 btn-success"
+                    text="Add to Cart"
+                  />
                 </div>
                 <div className="col-4 p-2">
                   <button className="btn w-100 btn-success">Add to Wish</button>

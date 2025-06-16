@@ -88,6 +88,9 @@ body {
 .section-top {
   margin-bottom: 80px !important;
 }
+.CartTop {
+  top: 50%;
+}
 
 .f-12 {
   font-size: 12px;

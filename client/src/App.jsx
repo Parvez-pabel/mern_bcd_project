@@ -12,10 +12,12 @@ import HowToBuy from "./pages/HowToBuy";
 import ContactPage from "./pages/ContactPage";
 import ComplainPage from "./pages/ComplainPage";
 import TermsPage from "./pages/TermsPage";
-import Login from "./components/user/Login";
+
 import LoginPage from "./pages/LoginPage";
 import OtpPage from "./pages/OtpPage";
 import ProfilePage from "./pages/ProfilePage";
+
+import CartListPage from "./pages/CartListPage";
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
         <Route path="/howtobuy" element={<HowToBuy />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/complain" element={<ComplainPage />} />
+        //Cart
+        <Route path="/cart" element={<CartListPage />} />
         //Login
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp" element={<OtpPage />} />
