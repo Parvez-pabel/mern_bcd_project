@@ -17,16 +17,30 @@ const HomePage = () => {
   } = ProductStore();
   const { FeatureListRequest } = FeatureStore();
 
+  // useEffect(() => {
+  //   (async () => {
+  //     await SliderListRequest();
+  //     await FeatureListRequest();
+  //     await CategoryListRequest();
+  //     await ProductListByRemarkRequest("new");
+  //     await BrandListRequest();
+  //   })();
+  // }, []);
   useEffect(() => {
     (async () => {
-      await SliderListRequest();
-      await FeatureListRequest();
-      await CategoryListRequest();
-      await ProductListByRemarkRequest("new");
-      await BrandListRequest();
+      try {
+        await Promise.all([
+          SliderListRequest(),
+          FeatureListRequest(),
+          CategoryListRequest(),
+          ProductListByRemarkRequest("new"),
+          BrandListRequest(),
+        ]);
+      } catch (error) {
+        console.error("API request error:", error);
+      }
     })();
   }, []);
-
   return (
     <Layout>
       <Slider />

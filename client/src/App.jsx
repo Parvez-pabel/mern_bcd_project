@@ -18,6 +18,7 @@ import OtpPage from "./pages/OtpPage";
 import ProfilePage from "./pages/ProfilePage";
 
 import CartListPage from "./pages/CartListPage";
+import WishListPage from "./pages/WishListPage";
 
 const App = () => {
   return (
@@ -38,6 +39,8 @@ const App = () => {
         <Route path="/complain" element={<ComplainPage />} />
         //Cart
         <Route path="/cart" element={<CartListPage />} />
+        //Wish
+        <Route path="/wish" element={<WishListPage />} />
         //Login
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp" element={<OtpPage />} />

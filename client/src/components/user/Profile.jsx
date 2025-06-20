@@ -15,7 +15,6 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       await ProfileDetailsRequest();
-      console.log("ProfileForm Data:", ProfileForm);
     })();
   }, []);
 
