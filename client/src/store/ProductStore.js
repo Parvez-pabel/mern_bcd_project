@@ -11,7 +11,7 @@ const ProductStore = create((set) => ({
   },
   CategoryList: null,
   CategoryListRequest: async () => {
-    let res = await axios.get(`${Backend_API}/ProductCategoryList`);
+    let res = await axios.get(`/api/ProductCategoryList`);
     if (res.data["status"] === "success") {
       set({ CategoryList: res.data["data"] });
     }
