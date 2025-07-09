@@ -1,1 +1,1 @@
-    const Backend_API = "https://zawyah.onrender.com/api";
+const Backend_API = "https://zawyah.onrender.com/";
