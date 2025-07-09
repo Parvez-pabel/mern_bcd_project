@@ -1,10 +1,11 @@
 import axios from "axios";
 import { create } from "zustand";
+import API from "../api.js";
 
 const ProductStore = create((set) => ({
   BrandList: null,
   BrandListRequest: async () => {
-    let res = await axios.get(`/api/ProductBrandList`);
+    let res = await axios.get(`${API}/ProductBrandList`);
     if (res.data["status"] === "success") {
       set({ BrandList: res.data["data"] });
     }
