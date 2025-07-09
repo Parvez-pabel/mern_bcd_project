@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import WishStore from "../../store/WishStore";
 
 const WishList = () => {
-  const { WishList, WishListRequest } = WishStore();
+  // const { WishList, WishListRequest } = WishStore();
 
-  useEffect(() => {
-    WishListRequest(); // call it only once
-  }, []);
+  // useEffect(() => {
+  //   WishListRequest(); // call it only once
+  // }, []);
   // const AddCart = async (productID) => {
   //   const { CartSaveRequest, CartListRequest } = CartStore();
   //   let res = await CartSaveRequest(productID);

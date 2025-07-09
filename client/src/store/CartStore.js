@@ -45,6 +45,7 @@ const CartStore = create((set) => ({
       const cartData = res.data?.data || [];
 
       let total = 0;
+
       cartData.forEach((item) => {
         const price = item.product.discount
           ? parseInt(item.product.discountPrice)
@@ -62,6 +63,18 @@ const CartStore = create((set) => ({
         CartVatTotal: vat,
         CartPayableTotal: payable,
       });
+    } catch (e) {
+      const status = e?.response?.status || null;
+      console.error("CartListRequest error:", e);
+      unauthorized(status);
+    }
+  },
+  RemoveCartListRequest: async (cartID) => {
+    try {
+      set({
+        CartList: null,
+      });
+      await axios.post(`/api/RemoveCartList`, { _id: cartID });
     } catch (e) {
       const status = e?.response?.status || null;
       console.error("CartListRequest error:", e);

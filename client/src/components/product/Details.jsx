@@ -8,6 +8,7 @@ import CartButton from "./../cart/CartButton";
 import toast from "react-hot-toast";
 import CartStore from "../../store/CartStore";
 
+
 const Details = () => {
   const { ProductDetails } = ProductStore();
   const [Quantity, SetQuantity] = useState(1);
