@@ -4,7 +4,9 @@ import { create } from "zustand";
 const ProductStore = create((set) => ({
   BrandList: null,
   BrandListRequest: async () => {
-    let res = await axios.get(`/api/ProductBrandList`);
+    let res = await axios.get(
+      `https://zawyah.onrender.com/api/ProductBrandList`
+    );
     if (res.data["status"] === "success") {
       set({ BrandList: res.data["data"] });
     }
