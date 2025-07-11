@@ -21,7 +21,7 @@ const ProductStore = create((set) => ({
   SliderList: null,
   SliderListRequest: async () => {
     let res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/ProductSliderList`
+      `/api/ProductSliderList`
     );
     if (res.data["status"] === "success") {
       set({ SliderList: res.data["data"] });
