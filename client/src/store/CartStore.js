@@ -41,7 +41,7 @@ const CartStore = create((set) => ({
 
   CartListRequest: async () => {
     try {
-      const res = await axios.get(`/api/CartList`);
+      const res = await axios.get(`api/CartList`);
       const cartData = res.data?.data || [];
 
       let total = 0;
@@ -74,7 +74,7 @@ const CartStore = create((set) => ({
       set({
         CartList: null,
       });
-      await axios.post(`/api/RemoveCartList`, { _id: cartID });
+      await axios.post(`api/RemoveCartList`, { _id: cartID });
     } catch (e) {
       const status = e?.response?.status || null;
       console.error("CartListRequest error:", e);

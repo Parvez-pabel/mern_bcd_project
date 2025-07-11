@@ -7,7 +7,7 @@ const WishStore = create((set) => ({
   WishSaveRequest: async (productID) => {
     try {
       set({ isWishSubmit: true });
-      let res = await axios.post(`/api/SaveWishList`, {
+      let res = await axios.post(`api/SaveWishList`, {
         productID: productID,
       });
       return res.data["status"] === "success";
@@ -22,7 +22,7 @@ const WishStore = create((set) => ({
   WishCount: 0,
   WishListRequest: async () => {
     try {
-      let res = await axios.get(`/api/WishList`);
+      let res = await axios.get(`api/WishList`);
       set({ WishList: res.data["data"] });
       set({ WishCount: res.data["data"].length });
     } catch (e) {

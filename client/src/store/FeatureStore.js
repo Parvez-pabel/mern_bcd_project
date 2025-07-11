@@ -4,7 +4,7 @@ import { create } from "zustand";
 const FeatureStore = create((set) => ({
   FeatureList: null,
   FeatureListRequest: async () => {
-    let res = await axios.get(`/api/FeaturesList`);
+    let res = await axios.get(`api/FeaturesList`);
     if (res.data["status"] === "success") {
       set({ FeatureList: res.data["data"] });
     }
@@ -12,7 +12,7 @@ const FeatureStore = create((set) => ({
   LegalDetails: null,
   LegalDetailsRequest: async (type) => {
     set({ LegalDetails: null });
-    let res = await axios.get(`/api/LegalDetails/${type}`);
+    let res = await axios.get(`api/LegalDetails/${type}`);
     if (res.data["status"] === "success") {
       set({ LegalDetails: res.data["data"] });
     }
