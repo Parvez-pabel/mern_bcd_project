@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api/": {
-        target: "https://zawyah.onrender.com/",
+        target: "https://zawyah.onrender.com",
       },
     },
   },
