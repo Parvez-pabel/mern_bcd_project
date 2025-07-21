@@ -27,15 +27,10 @@ mongoose
   .catch((err) => {
     console.error(" Error connecting to the DB", err);
   });
-const allowedOrigins = ["https://zawyah.vercel.app"];
+
 // Middleware
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(hpp());
