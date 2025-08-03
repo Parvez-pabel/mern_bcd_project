@@ -26,7 +26,7 @@ const UserStore = create((set) => ({
 
   UserOtpRequest: async (email) => {
     set({ isFormSubmit: true });
-    let res = await axios.get(`api/UserOTP/${email}`);
+    let res = await axios.get(`/api/UserOTP/${email}`);
     setEmail(email);
     set({ isFormSubmit: false });
     return res.data["status"] === "success";
@@ -34,7 +34,7 @@ const UserStore = create((set) => ({
   VerifyLoginRequest: async (otp) => {
     set({ isFormSubmit: true });
     let email = getEmail();
-    let res = await axios.get(`api/VerifyOTP/${email}/${otp}`);
+    let res = await axios.get(`/api/VerifyOTP/${email}/${otp}`);
     set({ isFormSubmit: false });
     return res.data["status"] === "success";
   },
@@ -42,7 +42,7 @@ const UserStore = create((set) => ({
   LogoutRequest: async () => {
     set({ isFormSubmit: true });
     let email = getEmail();
-    let res = await axios.get(`api/UserLogout`);
+    let res = await axios.get(`/api/UserLogout`);
     set({ isFormSubmit: false });
     return res.data["status"] === "success";
   },
@@ -78,7 +78,7 @@ const UserStore = create((set) => ({
 
   ProfileDetailsRequest: async () => {
     try {
-      let res = await axios.get(`api/ReadProfile`);
+      let res = await axios.get(`/api/ReadProfile`);
       if (
         res.data.status === "success" &&
         res.data.data &&
@@ -110,7 +110,7 @@ const UserStore = create((set) => ({
       set({
         ProfileDetails: null,
       });
-      let res = await axios.post(`api/UpdateProfile`, PostBody);
+      let res = await axios.post(`/api/UpdateProfile`, PostBody);
       return res.data["status"] === "success";
     } catch (e) {
       if (e.response && e.response.status) {
