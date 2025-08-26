@@ -5,8 +5,9 @@ import ProductStore from "../../store/ProductStore";
 import UserStore from "../../store/UserStore";
 import SubmitButton from "../user/SubmitButton";
 import toast from "react-hot-toast";
-import CartStore from "../../store/CartStore";
+
 import WishStore from "../../store/WishStore";
+import CartStore from "./../../store/CartStore";
 
 const AppNavbar = () => {
   const isLogin = UserStore((state) => state.isLogin);
@@ -16,6 +17,7 @@ const AppNavbar = () => {
   const setSearchKeyWord = ProductStore((state) => state.setSearchKeyWord);
   const { CartCount, CartListRequest } = CartStore();
   const { WishCount, WishListRequest } = WishStore();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const Keyword = SearchKeyWord.trim();
@@ -25,6 +27,7 @@ const AppNavbar = () => {
       navigate("/");
     }
   };
+
   useEffect(() => {
     (async () => {
       if (isLogin()) {
@@ -116,14 +119,14 @@ const AppNavbar = () => {
             </div>
             <div className="d-flex ">
               <Link to="/cart" className="btn ms-2 position-relative">
-                <i className="bi text-dark  bi-bag"></i>
+                <i className="bi bi-cart-dash text-success"></i>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                   {CartCount}
                 </span>
               </Link>
 
               <Link to="/wish" className="btn ms-2 position-relative">
-                <i className="bi text-dark  bi-bag"></i>
+                <i className="bi bi-heart text-danger"></i>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                   {WishCount}
                 </span>

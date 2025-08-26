@@ -39,36 +39,70 @@ const CartStore = create((set) => ({
   CartVatTotal: 0,
   CartPayableTotal: 0,
 
+  // CartListRequest: async () => {
+  //   try {
+  //     let res = await axios.get(`api/CartList`);
+  //     const cartData = res.data?.data || [];
+
+  //     set({
+  //       CartList: cartData,
+  //       CartCount: cartData.length,
+  //       // CartTotal: total,
+  //       // CartVatTotal: vat,
+  //       // CartPayableTotal: payable,
+  //     });
+
+  //     // cartData.forEach((item) => {
+  //     //   const price = item.product.discount
+  //     //     ? parseInt(item.product.discountPrice)
+  //     //     : parseInt(item.product.price);
+  //     //   total += parseInt(item.qty) * price;
+  //     // });
+
+  //     // const vat = total * 0.05;
+  //     // const payable = total + vat;
+  //   } catch (e) {
+  //     const status = e?.response?.status || null;
+  //     console.error("CartListRequest error:", e);
+  //     unauthorized(status);
+  //   }
+  // },
+
+  CartList: null,
+  CartCount: 0,
+  CartTotal: 0,
+  CartVatTotal: 0,
+  CartPayableTotal: 0,
+
   CartListRequest: async () => {
     try {
-      const res = await axios.get(`api/CartList`);
-      const cartData = res.data?.data || [];
-
+      let res = await axios.get(`/api/CartList`);
+      set({ CartList: res.data["data"] });
+      set({ CartCount: res.data["data"].length });
       let total = 0;
-
-      cartData.forEach((item) => {
-        const price = item.product.discount
-          ? parseInt(item.product.discountPrice)
-          : parseInt(item.product.price);
-        total += parseInt(item.qty) * price;
+      let vat = 0;
+      let payable = 0;
+      res.data["data"].forEach((item, i) => {
+        if (item["product"]["discount"] === true) {
+          total =
+            total +
+            parseInt(item["qty"]) * parseInt(item["product"]["discountPrice"]);
+        } else {
+          total =
+            total + parseInt(item["qty"]) * parseInt(item["product"]["price"]);
+        }
       });
 
-      const vat = total * 0.05;
-      const payable = total + vat;
-
-      set({
-        CartList: cartData,
-        CartCount: cartData.length,
-        CartTotal: total,
-        CartVatTotal: vat,
-        CartPayableTotal: payable,
-      });
+      vat = total * 0.05;
+      payable = vat + total;
+      set({ CartTotal: total });
+      set({ CartVatTotal: vat });
+      set({ CartPayableTotal: payable });
     } catch (e) {
-      const status = e?.response?.status || null;
-      console.error("CartListRequest error:", e);
       unauthorized(status);
     }
   },
+
   RemoveCartListRequest: async (cartID) => {
     try {
       set({

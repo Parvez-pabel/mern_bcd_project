@@ -125,7 +125,7 @@ const Products = () => {
                   </button>
                 </li>
               </ul>
-              <div className="tab-content" id="pills-tabContent">
+              <div className="tab-content" id="pills-tabContent ">
                 <div
                   className="tab-pane fade show active"
                   id="pills-new"
@@ -136,8 +136,8 @@ const Products = () => {
                   {ProductListByRemark === null ? (
                     <ProductsSkeleton />
                   ) : (
-                    <div className="container">
-                      <div className="row">
+                    <div className="container ">
+                      <div className="row mt-5">
                         {ProductListByRemark.map((item, index) => {
                           let price = (
                             <p className="bodyMedium text-dark my-1">
@@ -159,23 +159,47 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                <div
+                                  style={{
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+
+                                <div
+                                  className="card-body d-flex flex-column justify-content-between"
+                                  style={{ flexGrow: 1 }}
+                                >
+                                  <p
+                                    className="bodySmall text-secondary my-1 text-truncate"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>

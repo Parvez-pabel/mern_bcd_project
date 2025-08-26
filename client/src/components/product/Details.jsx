@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductImages from "./ProductImages";
 import ProductStore from "../../store/ProductStore";
 import DetailsSkeleton from "../../skeleton/DetailsSkeleton";
 import parse from "html-react-parser";
 import Reviews from "./Reviews";
-import CartButton from "./../cart/CartButton";
+import CartButton from "../cart/CartSubmitButton";
 import toast from "react-hot-toast";
 import CartStore from "../../store/CartStore";
-
+import WishStore from "../../store/WishStore";
+import WishSubmitButton from "../wish/WishSubmitButton";
 
 const Details = () => {
   const { ProductDetails } = ProductStore();
   const [Quantity, SetQuantity] = useState(1);
   const { CartFormChange, CartForm, CartSaveRequest, CartListRequest } =
     CartStore();
+  const { WishSaveRequest, WishListRequest } = WishStore();
+
   const IncrementQuantity = () => {
     SetQuantity((Quantity) => Quantity + 1);
   };
@@ -31,6 +34,13 @@ const Details = () => {
     if (res) {
       toast.success("Cart Item Added");
       await CartListRequest();
+    }
+  };
+  const AddWish = async (productID) => {
+    let res = await WishSaveRequest(productID);
+    if (res) {
+      toast.success("Wish Item Added");
+      await WishListRequest();
     }
   };
   if (ProductDetails === null) {
@@ -78,7 +88,11 @@ const Details = () => {
                     {ProductDetails[0].details.size
                       .split(",")
                       .map((item, index) => {
-                        return <option value={item}>{item}</option>;
+                        return (
+                          <option key={`size-${index}`} value={item}>
+                            {item}
+                          </option>
+                        );
                       })}
                   </select>
                 </div>
@@ -95,7 +109,11 @@ const Details = () => {
                     {ProductDetails[0].details.color
                       .split(",")
                       .map((item, index) => {
-                        return <option value={item}>{item}</option>;
+                        return (
+                          <option key={`color-${index}`} value={item}>
+                            {item}
+                          </option>
+                        );
                       })}
                   </select>
                 </div>
@@ -132,7 +150,13 @@ const Details = () => {
                   />
                 </div>
                 <div className="col-4 p-2">
-                  <button className="btn w-100 btn-success">Add to Wish</button>
+                  <WishSubmitButton
+                    onClick={async () => {
+                      await AddWish(ProductDetails[0]["_id"]);
+                    }}
+                    className="btn w-100 btn-success"
+                    text="Add to wish"
+                  />
                 </div>
               </div>
             </div>

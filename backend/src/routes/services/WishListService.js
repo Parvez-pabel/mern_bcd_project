@@ -70,7 +70,7 @@ const WishlistService = async (req) => {
       unwindProductCategoryStage,
       projectionStage,
     ]);
-    console.log(data);
+
     return { status: "success", data: data };
   } catch (error) {
     return { status: "fail", message: "something went wrong" };

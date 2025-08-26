@@ -17,15 +17,6 @@ const HomePage = () => {
   } = ProductStore();
   const { FeatureListRequest } = FeatureStore();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await SliderListRequest();
-  //     await FeatureListRequest();
-  //     await CategoryListRequest();
-  //     await ProductListByRemarkRequest("new");
-  //     await BrandListRequest();
-  //   })();
-  // }, []);
   useEffect(() => {
     (async () => {
       try {

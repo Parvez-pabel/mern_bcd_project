@@ -148,22 +148,44 @@ const ProductList = () => {
                           <Link
                             to={`/details/${item._id}`}
                             className="card shadow-sm h-100 rounded-3 bg-white"
+                            style={{ display: "flex", flexDirection: "column" }}
                           >
-                            <img
-                              className="w-100 rounded-top-2"
-                              src={item.image}
-                            />
-                            <div className="card-body">
-                              <p className="bodySmal text-secondary my-1">
+                            <div
+                              style={{
+                                height: "180px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <img
+                                className="w-100 h-100 rounded-top-2"
+                                style={{ objectFit: "contain" }}
+                                src={item.image}
+                                alt={item.title}
+                              />
+                            </div>
+
+                            <div
+                              className="card-body d-flex flex-column justify-content-between"
+                              style={{ flexGrow: 1 }}
+                            >
+                              <p
+                                className="bodySmall text-secondary my-1 text-truncate"
+                                style={{ minHeight: "40px" }}
+                              >
                                 {item.title}
                               </p>
-                              {Price}
-                              <StarRatings
-                                rating={Number(item?.star || 0)}
-                                starRatedColor="red"
-                                starDimension="15px"
-                                starSpacing="2px"
-                              />
+                              
+                              <div className="mt-auto">
+                                {Price}
+                                <StarRatings
+                                  rating={Number(item?.star || 0)}
+                                  starRatedColor="red"
+                                  starDimension="15px"
+                                  starSpacing="2px"
+                                />
+                              </div>
                             </div>
                           </Link>
                         </div>
