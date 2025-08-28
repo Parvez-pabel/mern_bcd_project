@@ -3,6 +3,9 @@ import ProfileSkeleton from "../../skeleton/ProfileSkeleton";
 import UserStore from "../../store/UserStore";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
+import SubmitButton from './SubmitButton';
+
 
 const Profile = () => {
   let {
@@ -17,7 +20,14 @@ const Profile = () => {
       await ProfileDetailsRequest();
     })();
   }, []);
-
+    const navigate = useNavigate();
+  const LogoutRequest = UserStore((state) => state.LogoutRequest);
+    const onLogout = async () => {
+    await LogoutRequest();
+    sessionStorage.clear();
+    localStorage.clear();
+    toast.success("Logout Successful!"), navigate("/");
+  };
   const save = async () => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -40,7 +50,31 @@ const Profile = () => {
     return <ProfileSkeleton />;
   } else {
     return (
-      <div className="container mt-5">
+      <div className="container mt-5 d-flex flex-column gap-4 ">
+        <div className="card p-5 rounded-3 d-flex flex-row gap-4 justify-content-end">
+          <>
+            <Link type="button" className="btn btn-primary" to={`/orders`}>
+              Payment & Orders History
+            </Link>
+            <Link type="button" className="btn btn-secondary">
+              Purchase Products
+            </Link>
+            <button type="button" className="btn btn-success">
+              Forget Password
+            </button>
+            <button type="button" className="btn btn-warning">
+              Warning
+            </button>
+            <button type="button" className="btn btn-info">
+              Info
+            </button>
+            <SubmitButton
+              onClick={onLogout}
+              className="btn ms-3 btn-danger d-flex"
+              text="Logout"
+            ></SubmitButton>
+          </>
+        </div>
         <div className="card p-5 rounded-3">
           <h6>Customer Details</h6>
           <hr />

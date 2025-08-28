@@ -19,6 +19,8 @@ import ProfilePage from "./pages/ProfilePage";
 
 import CartListPage from "./pages/CartListPage";
 import WishListPage from "./pages/WishListPage";
+import OrderPage from "./pages/OrderPage";
+import InvoiceDetailsPage from "./pages/InvoiceDetailsPage";
 
 const App = () => {
   return (
@@ -45,6 +47,9 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        //order
+        <Route path="/orders" element={<OrderPage />} />
+        <Route path="/invoice/:id" element={<InvoiceDetailsPage />} />
       </Routes>
     </BrowserRouter>
   );

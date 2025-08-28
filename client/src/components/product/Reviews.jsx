@@ -12,8 +12,9 @@ const Reviews = () => {
             return (
               <li key={index} className="list-group-item card bg-transparent">
                 <h6 className="m-0 p-0 ">
-                  <i className="bi bi-person-square m-2 "></i>
-                  {item.profile.cus_name} _<span>{item.profile.cus_add} </span>
+                  <i class="bi bi-person-circle m-2"></i>
+                  {item.profile.cus_name} _
+                  <br />
                   <span className=" m-2 ">
                     <StarRatings
                       rating={parseFloat(item.rating)}
@@ -23,6 +24,7 @@ const Reviews = () => {
                     />
                   </span>
                 </h6>
+                <br />
                 <p>{item.des}</p>
               </li>
             );

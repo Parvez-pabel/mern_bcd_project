@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductStore from "../../store/ProductStore";
 import ProductsSkeleton from "./../../skeleton/ProductsSkeleton";
 import { Link } from "react-router-dom";
@@ -6,6 +6,9 @@ import StarRatings from "react-star-ratings";
 
 const Products = () => {
   const { ProductListByRemark, ProductListByRemarkRequest } = ProductStore();
+  useEffect(() => {
+    ProductListByRemarkRequest("new");
+  }, []);
 
   return (
     <div className="section">
@@ -165,8 +168,10 @@ const Products = () => {
                                 }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
+                                {/* Image wrapper */}
                                 <div
                                   style={{
+                                    padding: "15px",
                                     height: "180px",
                                     display: "flex",
                                     alignItems: "center",
@@ -174,13 +179,14 @@ const Products = () => {
                                   }}
                                 >
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 h-100 rounded-top-2"
                                     style={{ objectFit: "contain" }}
                                     src={item.image}
                                     alt={item.title}
                                   />
                                 </div>
 
+                                {/* Body */}
                                 <div
                                   className="card-body d-flex flex-column justify-content-between"
                                   style={{ flexGrow: 1 }}
@@ -191,6 +197,7 @@ const Products = () => {
                                   >
                                     {item.title}
                                   </p>
+
                                   <div className="mt-auto">
                                     {price}
                                     <StarRatings
@@ -243,23 +250,45 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                {/* Image wrapper */}
+                                <div
+                                  style={{
+                                    padding: "15px",
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 h-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+                                <div className="card-body d-flex flex-column justify-content-between">
+                                  <p
+                                    className="bodySmall text-secondary my-1"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>
@@ -302,23 +331,48 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                {/* Image wrapper */}
+                                <div
+                                  style={{
+                                    padding: "15px",
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 h-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+                                <div
+                                  className="card-body d-flex flex-column justify-content-between"
+                                  style={{ flexGrow: 1 }}
+                                >
+                                  <p
+                                    className="bodySmall text-secondary my-1 text-truncate"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>
@@ -361,23 +415,51 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                {/* Image wrapper */}
+                                <div
+                                  style={{
+                                    padding:"15px",
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 h-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+
+                                {/* Body */}
+                                <div
+                                  className="card-body d-flex flex-column justify-content-between"
+                                  style={{ flexGrow: 1 }}
+                                >
+                                  <p
+                                    className="bodySmall text-secondary my-1 text-truncate"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>
@@ -420,23 +502,51 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                {/* Image wrapper */}
+                                <div
+                                  style={{
+                                    padding: "15px",
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 h-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+
+                                {/* Body */}
+                                <div
+                                  className="card-body d-flex flex-column justify-content-between"
+                                  style={{ flexGrow: 1 }}
+                                >
+                                  <p
+                                    className="bodySmall text-secondary my-1 text-truncate"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>
@@ -479,23 +589,51 @@ const Products = () => {
                             >
                               <Link
                                 to={`/details/${item._id}`}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
                                 className="card shadow-sm h-100 rounded-3 bg-white"
                               >
-                                <img
-                                  className="w-100 rounded-top-2"
-                                  src={item.image}
-                                />
-                                <div className="card-body">
-                                  <p className="bodySmal text-secondary my-1">
+                                {/* Image wrapper */}
+                                <div
+                                  style={{
+                                    padding: "15px",
+                                    height: "180px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <img
+                                    className="w-100 h-100 rounded-top-2"
+                                    style={{ objectFit: "contain" }}
+                                    src={item.image}
+                                    alt={item.title}
+                                  />
+                                </div>
+
+                                {/* Body */}
+                                <div
+                                  className="card-body d-flex flex-column justify-content-between"
+                                  style={{ flexGrow: 1 }}
+                                >
+                                  <p
+                                    className="bodySmall text-secondary my-1 text-truncate"
+                                    style={{ minHeight: "40px" }}
+                                  >
                                     {item.title}
                                   </p>
-                                  {price}
-                                  <StarRatings
-                                    rating={parseFloat(item.star)}
-                                    starRatedColor="red"
-                                    starDimension="15px"
-                                    starSpacing="2px"
-                                  />
+
+                                  <div className="mt-auto">
+                                    {price}
+                                    <StarRatings
+                                      rating={Number(item?.star || 0)}
+                                      starRatedColor="red"
+                                      starDimension="15px"
+                                      starSpacing="2px"
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>

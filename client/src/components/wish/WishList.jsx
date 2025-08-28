@@ -49,23 +49,43 @@ const WishList = () => {
             }
             return (
               <div key={i} className="col-md-3 p-2 col-lg-3 col-sm-6 col-12">
-                <div className="card shadow-sm h-100 rounded-3 bg-white">
-                  <img
-                    alt=""
-                    className="w-100 rounded-top-2"
-                    src={item["product"]["image"]}
-                  />
+                <div
+                  style={{ display: "flex", flexDirection: "column" }}
+                  className="card shadow-sm h-100 rounded-3 bg-white"
+                >
+                  {/* Image wrapper */}
+                  <div
+                    style={{
+                      padding: "15px",
+                      height: "180px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      className="w-100 h-100 rounded-top-2"
+                      style={{ objectFit: "contain" }}
+                      src={item["product"]["image"]}
+                      alt={item.title}
+                    />
+                  </div>
                   <div className="card-body">
-                    <p className="bodySmall text-secondary my-1">
+                    <p
+                      className="bodySmall text-secondary my-1 text-truncate"
+                      style={{ minHeight: "40px" }}
+                    >
                       {item["product"]["title"]}
                     </p>
-                    {price}
-                    <StarRatings
-                      rating={parseFloat(item["product"]["star"])}
-                      starRatedColor="red"
-                      starDimension="15px"
-                      starSpacing="2px"
-                    />
+                    <div className="mt-auto">
+                      {price}
+                      <StarRatings
+                        rating={parseFloat(item["product"]["star"])}
+                        starRatedColor="red"
+                        starDimension="15px"
+                        starSpacing="2px"
+                      />
+                    </div>
 
                     <p className="mt-3">
                       <button

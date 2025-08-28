@@ -115,5 +115,44 @@ const CartStore = create((set) => ({
       unauthorized(status);
     }
   },
+  CreateInvoiceRequest: async () => {
+    try {
+      set({ isCartSubmit: true });
+      let res = await axios.get(`/api/CreateInvoice`);
+      window.location.href = res.data["data"]["GatewayPageURL"];
+    } catch (e) {
+      const status = e?.response?.status || null;
+      console.error("CreateInvoiceRequest error:", e);
+      unauthorized(status);
+    } finally {
+      set({ isCartSubmit: false });
+    }
+  },
+
+  InvoiceList: null,
+  InvoiceListRequest: async () => {
+    try {
+      let res = await axios.get(`/api/InvoiceList`);
+      set({ InvoiceList: res.data["data"] });
+    } catch (e) {
+      const status = e?.response?.status || null;
+      console.error("InvoiceListRequest error:", e);
+      unauthorized(status);
+    } finally {
+    }
+  },
+
+  InvoiceDetails: null,
+  InvoiceDetailsRequest: async (id) => {
+    try {
+      let res = await axios.get(`/api/InvoiceProductList/${id}`);
+      set({ InvoiceDetails: res.data["data"] });
+    } catch (e) {
+      const status = e?.response?.status || null;
+      console.error("InvoiceDetailsRequest error:", e);
+      unauthorized(status);
+    } finally {
+    }
+  },
 }));
 export default CartStore;

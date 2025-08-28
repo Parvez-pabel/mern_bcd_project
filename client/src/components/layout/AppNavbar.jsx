@@ -137,11 +137,7 @@ const AppNavbar = () => {
                   <Link to="/profile" className="btn ms-3 btn-success d-flex ">
                     <i className="bi bi-person-circle"></i>
                   </Link>
-                  <SubmitButton
-                    onClick={onLogout}
-                    className="btn ms-3 btn-success d-flex"
-                    text="Logout"
-                  ></SubmitButton>
+
                 </>
               ) : (
                 <Link to="/login" className="btn ms-3 btn-success d-flex">

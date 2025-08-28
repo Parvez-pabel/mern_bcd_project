@@ -64,8 +64,7 @@ const CartList = () => {
                           {item["size"]}, Color: {item["color"]}
                         </p>
                         <p className=" h6 fw-bold m-0 text-dark">
-                          Total <i className="bi bi-currency-dollar"></i>
-                          {parseInt(price) * parseInt(item["qty"])}
+                          Total ৳ {parseInt(price) * parseInt(item["qty"])}
                         </p>
                       </div>
                       <button
@@ -87,23 +86,15 @@ const CartList = () => {
               <div className="my-4">
                 <ul className="list-group bg-transparent  list-group-flush">
                   <li className="list-group-item bg-transparent h6 m-0 text-dark">
-                    <span className="float-end">
-                      Total: <i className="bi bi-currency-dollar" />
-                      {CartTotal}{" "}
-                    </span>
+                    <span className="float-end">Total: ৳ {CartTotal} </span>
+                  </li>
+                  <li className="list-group-item bg-transparent h6 m-0 text-dark">
+                    <span className="float-end"> Vat(5%): ৳ {CartVatTotal}</span>
                   </li>
                   <li className="list-group-item bg-transparent h6 m-0 text-dark">
                     <span className="float-end">
                       {" "}
-                      Vat(5%): <i className="bi bi-currency-dollar" />
-                      {CartVatTotal}
-                    </span>
-                  </li>
-                  <li className="list-group-item bg-transparent h6 m-0 text-dark">
-                    <span className="float-end">
-                      {" "}
-                      Payable: <i className="bi bi-currency-dollar" />
-                      {CartPayableTotal}
+                      Payable: ৳ {CartPayableTotal}
                     </span>
                   </li>
                   <li className="list-group-item bg-transparent ">

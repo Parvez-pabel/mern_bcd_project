@@ -40,8 +40,8 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 // Rate Limit
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 1 * 60 * 1000, // 15 minutes
+  max: 10000, // limit each IP to 100 requests per windowMs
 });
 
 app.use(limiter);

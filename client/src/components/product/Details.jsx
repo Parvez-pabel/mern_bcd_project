@@ -166,12 +166,12 @@ const Details = () => {
               <li className="nav-item" role="presentation">
                 <button
                   className="nav-link active"
-                  id="Speci-tab"
+                  id="Special-tab"
                   data-bs-toggle="tab"
-                  data-bs-target="#Speci-tab-pane"
+                  data-bs-target="#Special-tab-pane"
                   type="button"
                   role="tab"
-                  aria-controls="Speci-tab-pane"
+                  aria-controls="Special-tab-pane"
                   aria-selected="true"
                 >
                   Specifications
@@ -195,9 +195,9 @@ const Details = () => {
             <div className="tab-content" id="myTabContent">
               <div
                 className="tab-pane fade show active"
-                id="Speci-tab-pane"
+                id="Special-tab-pane"
                 role="tabpanel"
-                aria-labelledby="Speci-tab"
+                aria-labelledby="Special-tab"
                 tabIndex="0"
               >
                 {parse(ProductDetails[0].details.des)}
